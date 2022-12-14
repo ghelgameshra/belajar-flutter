@@ -1,36 +1,57 @@
+import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 
 void main(){
-  runApp( MyApp() );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
+  var faker = new Faker();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Image Widget"),
+          title: Text("Extract Widget"),
         ),
-        body: Center(
-          child: Container(
-            width: 250,
-            height: 400,
-            color: Colors.amber,
 
-            child: Image.asset(
-              "images/image1.jpg",
-              fit: BoxFit.cover,
-              ),
+        body: ListView.builder(
+          itemCount: 20,
+          itemBuilder: (context, index) {
+            return ChatItem( 
+              imageUrl: "https://picsum.photos/id/$index/200/200", 
+              title: faker.person.name(), 
+              subtitle: faker.lorem.sentence(), );
+          },
 
-            // child: Image(
-            //   fit: BoxFit.cover,
-            //   image: AssetImage("images/image1.jpg"
-            //   ),),
-            // child: Image(image: NetworkImage("https://picsum.photos/250/400"),),
-          ),
+
         ),
+
       ),
+    );
+  }
+}
+
+class ChatItem extends StatelessWidget {
+
+  final String imageUrl;
+  final String title;
+  final String subtitle;
+
+  ChatItem({this.imageUrl, this.subtitle, this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: NetworkImage(imageUrl),
+      ),
+
+      title: Text(title),
+      subtitle: Text(subtitle),
+      trailing: Text("10:10 PM"),
     );
   }
 }

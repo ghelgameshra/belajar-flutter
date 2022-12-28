@@ -1,57 +1,71 @@
-import 'package:faker/faker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:horizon/screens/create_screen.dart';
 
 void main(){
-  runApp(MyApp());
+  runApp(myApp());
 }
 
-class MyApp extends StatelessWidget {
-
-  var faker = new Faker();
+class myApp extends StatelessWidget {
+  const myApp( {Key? key} ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Extract Widget"),
-        ),
-
-        body: ListView.builder(
-          itemCount: 20,
-          itemBuilder: (context, index) {
-            return ChatItem( 
-              imageUrl: "https://picsum.photos/id/$index/200/200", 
-              title: faker.person.name(), 
-              subtitle: faker.lorem.sentence(), );
-          },
-
-
-        ),
-
-      ),
+      title: "Horizon Cashier",
+      home: AddOrdePage(),
     );
   }
 }
 
-class ChatItem extends StatelessWidget {
-
-  final String imageUrl;
-  final String title;
-  final String subtitle;
-
-  ChatItem({this.imageUrl, this.subtitle, this.title});
+class HomePage extends StatelessWidget {
+  const HomePage( {Key? key} ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(imageUrl),
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 38,
+        title: Text("Horizon Order", style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold
+        ),), 
+        backgroundColor: Color.fromARGB(255, 26, 68, 141),
       ),
-
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: Text("10:10 PM"),
+      body: SafeArea(
+        minimum: EdgeInsets.symmetric(
+          horizontal: 10,
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: 20,),
+            Text("Total : Rp. 53000", style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                )
+              ),
+            SizedBox(height: 5,),
+            Text("Jumlah order : 4", style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 14,
+                )
+              ),
+            SizedBox(height: 30,),
+            ListTile(
+              title: Text("Rizky andriawan"), 
+              subtitle: Text("Rp. 20.000"),
+              leading: Icon(CupertinoIcons.cart_badge_plus, color: Colors.green,),
+              trailing: Wrap(
+                children: [
+                  Icon(CupertinoIcons.pencil_circle, color: Colors.yellow,),
+                  SizedBox(width: 10,),
+                  Icon(CupertinoIcons.trash_circle, color: Colors.red,),
+                ],
+              ),
+            ), 
+          ],
+        ),
+      ), backgroundColor: Color.fromARGB(255, 250, 250, 250),
     );
   }
 }
